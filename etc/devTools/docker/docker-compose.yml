@@ -14,30 +14,5 @@ services:
         ports:
             - "9901:9901"
 
-    nginx:
-        container_name: zinio_best_route_generator_nginx
-        build:
-            context: nginx
-            args:
-                MAX_EXECUTION_TIME: ${MAX_EXECUTION_TIME}
-                SERVER_NAME: ${SERVER_NAME}
-        ports:
-            - "80:80"
-        volumes:
-            - volume_zinio_best_route_generator_nginx:/var/log/nginx
-        depends_on:
-            - php-fpm
-
-    neo4j:
-        image: neo4j:4.1.2
-        environment:
-            - NEO4J_AUTH=neo4j/${NEO4J_AUTH_PASS}
-        volumes:
-            - volume_zinio_best_route_generator_neo4j:/data
-        ports:
-            - "7474:7474"
-            - "7687:7687"
-
 volumes:
-    volume_zinio_best_route_generator_nginx:
     volume_zinio_best_route_generator_neo4j:

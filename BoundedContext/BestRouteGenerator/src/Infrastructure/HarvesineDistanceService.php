@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Infrastructure;
 
 use BestRouteGenerator\Domain\City;
-use BestRouteGenerator\Domain\DistanceBetween2Cities;
+use BestRouteGenerator\Domain\Distance;
 use BestRouteGenerator\Domain\DistanceService;
 
 class HarvesineDistanceService implements DistanceService
@@ -14,7 +14,7 @@ class HarvesineDistanceService implements DistanceService
     public function findDistanceInMetersBetween2GpsPointsService(
         City $cityFrom,
         City $cityTo
-    ): DistanceBetween2Cities {
+    ): Distance {
         $latFrom = deg2rad($cityFrom->getCoordinate()->getLatitude());
         $lonFrom = deg2rad($cityFrom->getCoordinate()->getLongitude());
         $latTo = deg2rad($cityTo->getCoordinate()->getLatitude());
@@ -25,15 +25,13 @@ class HarvesineDistanceService implements DistanceService
 
         $angle = 2 * asin(
                 sqrt(
-                    pow(sin($latDelta / 2), 2) +
-                    cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)
+                    (sin($latDelta / 2) ** 2) +
+                    cos($latFrom) * cos($latTo) * (sin($lonDelta / 2) ** 2)
                 )
             );
         $distance = $angle * self::EARTH_RADIUS_IN_METERS;
 
-        return new DistanceBetween2Cities(
-            $cityFrom,
-            $cityTo,
+        return Distance::createInMeters(
             $distance
         );
     }

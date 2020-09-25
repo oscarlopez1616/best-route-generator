@@ -10,5 +10,5 @@ interface DistanceService
     public function findDistanceInMetersBetween2GpsPointsService(
         City $cityFrom,
         City $cityTo
-    ): DistanceBetween2Cities;
+    ): Distance;
 }

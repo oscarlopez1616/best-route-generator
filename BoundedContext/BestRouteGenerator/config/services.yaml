@@ -29,3 +29,9 @@ services:
 
   BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\DijkstraDistanceService'
 
+  BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
+
+  BestRouteGenerator\Domain\CityRepository: '@BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository'
+
+
+

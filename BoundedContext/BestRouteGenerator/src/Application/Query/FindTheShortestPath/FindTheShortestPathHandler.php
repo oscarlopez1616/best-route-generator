@@ -4,87 +4,54 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Application\Query\FindTheShortestPath;
 
 
-use BestRouteGenerator\Domain\City;
-use BestRouteGenerator\Domain\Coordinate;
+use BestRouteGenerator\Domain\CityName;
+use BestRouteGenerator\Domain\CityRepository;
 use BestRouteGenerator\Domain\DistanceService;
+use BestRouteGenerator\Domain\Graph;
 use BestRouteGenerator\Domain\OptimalPathService;
 use BestRouteGenerator\Domain\Path;
 use Common\Type\QueryHandler;
-use http\Exception\RuntimeException;
 
 
 class FindTheShortestPathHandler implements QueryHandler
 {
     private DistanceService $distanceService;
     private OptimalPathService $optimalService;
+    private CityRepository $cityRepository;
 
 
-    public function __construct(DistanceService $distanceService, OptimalPathService $optimalService)
-    {
+    public function __construct(
+        DistanceService $distanceService,
+        OptimalPathService $optimalService,
+        CityRepository $cityRepository
+    ) {
         $this->distanceService = $distanceService;
         $this->optimalService = $optimalService;
+        $this->cityRepository = $cityRepository;
     }
 
 
     public function __invoke(FindTheShortestPathQuery $query): array
     {
+        $cities = $this->cityRepository->findAllCities();
 
-        $cities = $this->read();
+        $paths = [];
 
-
-        $graph = [];
-
-        foreach ($cities as $cityName => $location) {
+        foreach ($cities as $city) {
             $distances = [];
             $i = 0;
-            foreach ($cities as $cityName1 => $location1) {
-                if ($cityName !== $cityName1) {
+            foreach ($cities as $city1) {
+                if ($city->getId()->getValue() !== $city1->getId()->getValue()) {
                     $distances[$i] = $this->distanceService->findDistanceInMetersBetween2GpsPointsService(
-                        new City(
-                            $cityName,
-                            new Coordinate(
-                                $location['latitude'],
-                                $location['longitude']
-                            ),
-                        ),
-                        new City(
-                            $cityName1,
-                            new Coordinate(
-                                $location1['latitude'],
-                                $location1['longitude']
-                            ),
-                        )
+                        $city,
+                        $city1
                     );
                 }
                 $i++;
             }
-            $graph[] = new Path($cityName, $distances);
+            $paths[] = new Path($city->getId(), $distances);
         }
 
-        return $this->optimalService->findOptimalPath($graph, 0, 32);
+        return $this->optimalService->findOptimalPathInMeters(new Graph($paths), new CityName('Beijing'));
     }
-
-    private function read(): array
-    {
-        $cities = [];
-
-        $file = fopen("/var/www/data/BoundedContext/BestRouteGenerator/etc/data/"."cities.txt", 'rb');
-        if ($file) {
-            while (($line = fgets($file)) !== false) {
-                $parts = explode(" ", $line);
-                $length = count($parts);
-                $latitude = $parts[$length - 2];
-                $longitude = $parts[$length - 1];
-                unset($parts[$length - 1], $parts[$length - 2]);
-                $cityName = implode(" ", $parts);
-                $cities[$cityName] = ['latitude' => (float)$latitude, 'longitude' => (float)$longitude];
-            }
-            fclose($file);
-        } else {
-            throw new RuntimeException('Error opening File');
-        }
-
-        return $cities;
-    }
-
 }

@@ -5,45 +5,41 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain;
 
 
+use Common\Type\Id;
 use Common\Type\ValueObject;
 
 class Path extends ValueObject
 {
-    private string $cityFrom;
+    private Id $id;
 
     /**
-     * @var vertex[]
+     * @var Distance[]
      */
     private array $vertices;
 
     /**
      * Path constructor.
-     * @param string $cityFrom
-     * @param vertex[] $vertices
+     * @param Id $id
+     * @param Distance[] $vertices
      */
-    public function __construct(string $cityFrom, array $vertices)
+    public function __construct(Id $id, array $vertices)
     {
-        $this->cityFrom = $cityFrom;
+        $this->id = $id;
         $this->vertices = $vertices;
     }
 
-    /**
-     * @return string
-     */
-    public function getCityFrom(): string
+    public function getId(): Id
     {
-        return $this->cityFrom;
+        return $this->id;
     }
 
     /**
-     * @return vertex[]
+     * @return Distance[]
      */
     public function getVertices(): array
     {
         return $this->vertices;
     }
-
-
 
 
     /**
@@ -52,7 +48,8 @@ class Path extends ValueObject
      */
     protected function equalValues(ValueObject $o): bool
     {
-        // TODO: Implement equalValues() method.
+        //TODO finish
+        return $this->id->equals($o->getId());
     }
 
 
