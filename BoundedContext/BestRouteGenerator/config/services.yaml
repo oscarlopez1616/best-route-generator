@@ -30,8 +30,11 @@ services:
   BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\DijkstraDistanceService'
 
   BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
+    arguments:
+      $citiesFile: "%kernel.project_dir%/%env(CITIES_FILE)%"
 
   BestRouteGenerator\Domain\CityRepository: '@BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository'
+
 
 
 

@@ -36,14 +36,7 @@ class GetTheShortestPathController extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->queryBus->handle(
-            new FindTheShortestPathQuery(
-                'Singapore',
-                1.14,
-                103.55,
-                'San Francisco',
-                37.47,
-                -122.26
-            )
+            new FindTheShortestPathQuery()
         );
 
         $output->write(serialize($result));

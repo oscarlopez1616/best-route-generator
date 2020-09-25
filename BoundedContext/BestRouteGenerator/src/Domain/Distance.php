@@ -43,7 +43,7 @@ class Distance extends ValueObject
                 sprintf('the units to add Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
-        return new self($distance->getDistance(), $this->getUnit());
+        return new self($this->distance+$distance->getDistance(), $this->getUnit());
     }
 
     public function isLessThan(Distance $distance): bool

@@ -12,6 +12,13 @@ use http\Exception\RuntimeException;
 
 class FileSystemCityRepository implements CityRepository
 {
+    private string $pathCityFile;
+
+    public function __construct(string $citiesFile)
+    {
+        $this->pathCityFile = $citiesFile;
+    }
+
     /**
      * @inheritDoc
      */
@@ -19,7 +26,7 @@ class FileSystemCityRepository implements CityRepository
     {
         $cities = [];
 
-        $file = fopen("/var/www/data/BoundedContext/BestRouteGenerator/etc/data/" . "cities.txt", 'rb');
+        $file = fopen($this->pathCityFile, 'rb');
         if ($file) {
             while (($line = fgets($file)) !== false) {
                 $parts = explode(" ", $line);
@@ -34,11 +41,10 @@ class FileSystemCityRepository implements CityRepository
                 );
             }
             fclose($file);
-        } else {
-            throw new RuntimeException('Error opening File');
+            return $cities;
         }
 
-        return $cities;
+        throw new RuntimeException('Error opening File');
     }
 
 

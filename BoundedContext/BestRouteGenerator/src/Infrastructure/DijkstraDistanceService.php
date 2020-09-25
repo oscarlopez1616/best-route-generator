@@ -22,7 +22,6 @@ class DijkstraDistanceService implements OptimalPathService
 
         $sourceAsIndex = $graph->getIndexByPathId($source);
 
-
         /**
          * @var Distance
          */
@@ -39,14 +38,14 @@ class DijkstraDistanceService implements OptimalPathService
         $distance[$sourceAsIndex] = Distance::createInMeters(0);
 
         for ($count = 0; $count < $verticesCount - 1; ++$count) {
-            $u = $this->minimumDistanceInMeters($distance, $shortestPathTreeSet, $verticesCount);
+            $u = $this->minimumDistanceIndex($distance, $shortestPathTreeSet, $verticesCount);
             $shortestPathTreeSet[$u] = true;
 
             for ($v = 0; $v < $verticesCount; ++$v) {
                 if (
                     !$shortestPathTreeSet[$v]
-                    && !$distance[$u]->equals(Distance::createInMeters(self::INT_MAX))
-                    && $graph->getPaths()[$u]->getVertices()[$v]->getDistance()
+                    && $distance[$u]->getDistance() !== Distance::createInMeters(self::INT_MAX)->getDistance()
+                    && (bool)$graph->getPaths()[$u]->getVertices()[$v]->getDistance()
                     && $distance[$u]->addDistance($graph->getPaths()[$u]->getVertices()[$v])->isLessThan($distance[$v])
                 ) {
                     $distance[$v] = $distance[$u]->addDistance($graph->getPaths()[$u]->getVertices()[$v]);
@@ -63,7 +62,7 @@ class DijkstraDistanceService implements OptimalPathService
      * @param int $verticesCount
      * @return int
      */
-    private function minimumDistanceInMeters(array $distance, array $shortestPathTreeSet, int $verticesCount): int
+    private function minimumDistanceIndex(array $distance, array $shortestPathTreeSet, int $verticesCount): int
     {
         $min = Distance::createInMeters(self::INT_MAX);
         $minIndex = 0;

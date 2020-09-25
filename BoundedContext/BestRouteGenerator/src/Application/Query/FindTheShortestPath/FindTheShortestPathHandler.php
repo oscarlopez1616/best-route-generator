@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Application\Query\FindTheShortestPath;
 
 
+use BestRouteGenerator\Domain\City;
 use BestRouteGenerator\Domain\CityName;
 use BestRouteGenerator\Domain\CityRepository;
+use BestRouteGenerator\Domain\Coordinate;
 use BestRouteGenerator\Domain\DistanceService;
 use BestRouteGenerator\Domain\Graph;
 use BestRouteGenerator\Domain\OptimalPathService;
@@ -52,6 +54,7 @@ class FindTheShortestPathHandler implements QueryHandler
             $paths[] = new Path($city->getId(), $distances);
         }
 
-        return $this->optimalService->findOptimalPathInMeters(new Graph($paths), new CityName('Beijing'));
+        print_r( $this->optimalService->findOptimalPathInMeters(new Graph($paths), new CityName('Beijing')));
+        die();
     }
 }
