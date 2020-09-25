@@ -6,9 +6,10 @@ namespace BestRouteGenerator\Domain;
 
 
 use Common\Type\Id;
+use Common\Type\ValueObject;
 use RuntimeException;
 
-class Graph
+class Graph extends ValueObject
 {
     /**
      * @var Path[]
@@ -38,6 +39,15 @@ class Graph
         }
 
         throw new RuntimeException(sprintf('this %s does not exist in this graph', $id));
-
     }
+
+    /**
+     * @param self|ValueObject $o
+     * @return bool
+     */
+    protected function equalValues(ValueObject $o): bool
+    {
+        // TODO: Implement equalValues() method.
+    }
+
 }

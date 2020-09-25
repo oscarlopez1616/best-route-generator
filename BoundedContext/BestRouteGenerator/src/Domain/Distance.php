@@ -10,12 +10,12 @@ use RuntimeException;
 
 class Distance extends ValueObject
 {
-    private const METERS = 'meters';
+    public const METERS = 'meters';
 
     private float $distance;
     private string $unit;
 
-    public function __construct(float $distance, string $unit)
+    private function __construct(float $distance, string $unit)
     {
         $this->distance = $distance;
         $this->unit = $unit;

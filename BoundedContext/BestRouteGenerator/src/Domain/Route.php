@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain;
 
 
-class Route
+use Common\Type\ValueObject;
+
+class Route extends ValueObject
 {
     /**
      * @var CityName[]
@@ -32,15 +34,19 @@ class Route
         return $this->cityNames;
     }
 
-    /**
-     * @return Distance
-     */
+    
     public function getTotalDistance(): Distance
     {
         return $this->totalDistance;
     }
 
-
-
+    /**
+     * @param self|ValueObject $o
+     * @return bool
+     */
+    protected function equalValues(ValueObject $o): bool
+    {
+        // TODO: Implement equalValues() method.
+    }
 
 }
