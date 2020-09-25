@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Application\Query\FindTheShortestPath;
 
 
-use BestRouteGenerator\Domain\City;
-use BestRouteGenerator\Domain\CityName;
+use BestRouteGenerator\Application\Dto\RouteDto;
 use BestRouteGenerator\Domain\CityRepository;
-use BestRouteGenerator\Domain\Coordinate;
+use BestRouteGenerator\Domain\Distance;
 use BestRouteGenerator\Domain\DistanceService;
 use BestRouteGenerator\Domain\Graph;
 use BestRouteGenerator\Domain\OptimalPathService;
@@ -33,7 +32,7 @@ class FindTheShortestPathHandler implements QueryHandler
     }
 
 
-    public function __invoke(FindTheShortestPathQuery $query): array
+    public function __invoke(FindTheShortestPathQuery $query): ?RouteDto
     {
         $cities = $this->cityRepository->findAllCities();
 
@@ -54,7 +53,21 @@ class FindTheShortestPathHandler implements QueryHandler
             $paths[] = new Path($city->getId(), $distances);
         }
 
-        print_r( $this->optimalService->findOptimalPathInMeters(new Graph($paths), new CityName('Beijing')));
-        die();
+        $combinationsWithStartingFromAllCities = [];
+        foreach ($paths as $path) {
+            $combinationsWithStartingFromAllCities[] = $this->optimalService->findOptimalPathInMeters(new Graph($paths), $path->getId());
+        }
+
+        $bestRoute = null;
+        $initialState = Distance::createInMeters(INF);
+
+        foreach ($combinationsWithStartingFromAllCities as $route) {
+            if ($route->getTotalDistance()->isLessThan($initialState)) {
+                $bestRoute = $route;
+                $initialState = $route->getTotalDistance();
+            }
+        }
+
+        return RouteDto::assemble($bestRoute);
     }
 }

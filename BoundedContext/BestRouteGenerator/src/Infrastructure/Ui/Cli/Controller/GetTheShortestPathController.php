@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace BestRouteGenerator\Infrastructure\Ui\Controller;
 
+use BestRouteGenerator\Application\Dto\RouteDto;
 use BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathQuery;
 use Common\Type\QueryBus;
 use Exception;
@@ -35,11 +36,14 @@ class GetTheShortestPathController extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /**
+         * @var RouteDto $result
+         */
         $result = $this->queryBus->handle(
             new FindTheShortestPathQuery()
         );
 
-        $output->write(serialize($result));
+        $output->write($result->__toString());
         return 0;
     }
 

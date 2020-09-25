@@ -9,6 +9,5 @@ use Common\Type\Id;
 
 interface OptimalPathService
 {
-
-    public function findOptimalPathInMeters(Graph $graph, Id $source): array;
+    public function findOptimalPathInMeters(Graph $graph, Id $source): Route;
 }

@@ -5,19 +5,17 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Infrastructure;
 
 
+use BestRouteGenerator\Domain\CityName;
 use BestRouteGenerator\Domain\Distance;
 use BestRouteGenerator\Domain\Graph;
 use BestRouteGenerator\Domain\OptimalPathService;
 use BestRouteGenerator\Domain\Path;
+use BestRouteGenerator\Domain\Route;
 use Common\Type\Id;
 
 class DijkstraDistanceService implements OptimalPathService
 {
-
-    private const INT_MAX = 0x7FFFFFFF;
-
-
-    public function findOptimalPathInMeters(Graph $graph, Id $source): array
+    public function findOptimalPathInMeters(Graph $graph, Id $source): Route
     {
 
         $sourceAsIndex = $graph->getIndexByPathId($source);
@@ -31,7 +29,7 @@ class DijkstraDistanceService implements OptimalPathService
         $verticesCount = count($graph->getPaths());
 
         for ($i = 0; $i < $verticesCount; ++$i) {
-            $distance[$i] = Distance::createInMeters(self::INT_MAX);
+            $distance[$i] = Distance::createInMeters(INF);
             $shortestPathTreeSet[$i] = false;
         }
 
@@ -44,7 +42,7 @@ class DijkstraDistanceService implements OptimalPathService
             for ($v = 0; $v < $verticesCount; ++$v) {
                 if (
                     !$shortestPathTreeSet[$v]
-                    && $distance[$u]->getDistance() !== Distance::createInMeters(self::INT_MAX)->getDistance()
+                    && $distance[$u]->getDistance() !== Distance::createInMeters(INF)->getDistance()
                     && (bool)$graph->getPaths()[$u]->getVertices()[$v]->getDistance()
                     && $distance[$u]->addDistance($graph->getPaths()[$u]->getVertices()[$v])->isLessThan($distance[$v])
                 ) {
@@ -64,7 +62,7 @@ class DijkstraDistanceService implements OptimalPathService
      */
     private function minimumDistanceIndex(array $distance, array $shortestPathTreeSet, int $verticesCount): int
     {
-        $min = Distance::createInMeters(self::INT_MAX);
+        $min = Distance::createInMeters(INF);
         $minIndex = 0;
 
         for ($v = 0; $v < $verticesCount; ++$v) {
@@ -81,17 +79,26 @@ class DijkstraDistanceService implements OptimalPathService
      * @param Path[] $graph
      * @param Distance[] $distance
      * @param int $verticesCount
-     * @return array
+     * @return Route
      */
-    private function formatResult(array $graph, array $distance, int $verticesCount): array
+    private function formatResult(array $graph, array $distance, int $verticesCount): Route
     {
         $result = [];
         $totalDistance = 0;
+
         for ($i = 0; $i < $verticesCount; ++$i) {
             $result[$graph[$i]->getId()->getValue()] = $distance[$i];
             $totalDistance += $distance[$i]->getDistance();
         }
-        $result['totalDistance'] = $totalDistance;
-        return $result;
+        asort($result);
+
+        $cities = [];
+
+        foreach ($result as $cityName => $distanceBetweenCities) {
+            $cities[] = new CityName($cityName);
+        }
+
+        return new Route($cities, Distance::createInMeters($totalDistance));
+
     }
 }
