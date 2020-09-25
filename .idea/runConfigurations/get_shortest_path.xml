@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="get-shortest-path" type="PhpLocalRunConfigurationType" factoryName="PHP Console" singleton="false" path="$PROJECT_DIR$/BoundedContext/BestRouteGenerator/bin/console" scriptParameters="zinio:best-route-generator:get-shortest-path ">
+    <CommandLine parameters="-d memory_limit=8000M" />
     <method v="2" />
   </configuration>
 </component>

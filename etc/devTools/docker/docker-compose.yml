@@ -13,15 +13,6 @@ services:
               target: /var/www/data
         ports:
             - "9901:9901"
-        depends_on:
-            - mysql
-            - redis
-
-    redis:
-        container_name: zinio_best_route_generator_redis
-        image: redis:alpine
-        ports:
-            - "6379:6379"
 
     nginx:
         container_name: zinio_best_route_generator_nginx
@@ -36,34 +27,17 @@ services:
             - volume_zinio_best_route_generator_nginx:/var/log/nginx
         depends_on:
             - php-fpm
-    mysql:
-        container_name: zinio_best_route_generator_mysql
-        image: mysql:5.7
-        command: --explicit_defaults_for_timestamp=1
-        volumes:
-            - volume_zinio_best_route_generator_mysql:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        ports:
-            - "3306:3306"
 
-    rabbit:
-        container_name: zinio_best_route_generator_rabbit
-        hostname: rabbit
-        image: rabbitmq:3-management
+    neo4j:
+        image: neo4j:4.1.2
         environment:
-            RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
-            RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+            - NEO4J_AUTH=neo4j/${NEO4J_AUTH_PASS}
         volumes:
-            - volume_zinio_best_route_generator_rabbit:/var/lib/rabbitmq
+            - volume_zinio_best_route_generator_neo4j:/data
         ports:
-            - "5672:5672"
-            - "15672:15672"
+            - "7474:7474"
+            - "7687:7687"
 
 volumes:
     volume_zinio_best_route_generator_nginx:
-    volume_zinio_best_route_generator_mysql:
-    volume_zinio_best_route_generator_rabbit:
+    volume_zinio_best_route_generator_neo4j:

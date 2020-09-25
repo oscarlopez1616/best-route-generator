@@ -6,18 +6,26 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+  BestRouteGenerator\Infrastructure\Ui\Controller\:
+    resource: '%kernel.project_dir%/src/Infrastructure/Ui/Cli/Controller'
+    tags: [ console.command ]
 
-    BestRouteGenerator\Infrastructure\Ui\Controller\:
-        resource: '%kernel.project_dir%/src/Infrastructure/Ui/Cli/Controller'
-        tags: [console.command]
+  Common\Type\QueryBus:
+    arguments:
+      $bus: '@siroko_core.query_bus'
 
-    Common\Type\QueryBus:
-        arguments:
-            $bus: '@siroko_core.query_bus'
+  BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathHandler:
 
-    BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathHandler:
+  BestRouteGenerator\Infrastructure\HarvesineDistanceService:
+
+  BestRouteGenerator\Domain\DistanceService: '@BestRouteGenerator\Infrastructure\HarvesineDistanceService'
+
+  BestRouteGenerator\Infrastructure\DijkstraDistanceService:
+
+  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\DijkstraDistanceService'
+
