@@ -28,8 +28,8 @@ services:
   BestRouteGenerator\Infrastructure\DijkstraDistanceService:
   BestRouteGenerator\Infrastructure\BruteForceOptimalPathService:
 
-#  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\BruteForceOptimalPathService'
-  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\DijkstraDistanceService'
+  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\BruteForceOptimalPathService'
+#  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\DijkstraDistanceService'
 
   BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
     arguments:
