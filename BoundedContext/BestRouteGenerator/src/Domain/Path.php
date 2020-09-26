@@ -57,10 +57,15 @@ class Path extends ValueObject
     public function getNodeIdWithMinimumDistance(): Id
     {
         $copyNodes = $this->nodes;
-       asort($copyNodes);
-       foreach ($copyNodes as $pathId => $node){
-           return new CityName($pathId);
-       }
+        uasort(
+            $copyNodes,
+            function (Distance $a, Distance $b) {
+                return $a->subtractDistance($b)->getDistance();
+            }
+
+        );
+
+        return new Id(array_keys($copyNodes)[0]);
     }
 
 

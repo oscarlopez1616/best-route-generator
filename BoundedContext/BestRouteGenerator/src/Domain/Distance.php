@@ -46,6 +46,16 @@ class Distance extends ValueObject
         return new self($this->distance+$distance->getDistance(), $this->getUnit());
     }
 
+    public function subtractDistance(Distance $distance): self
+    {
+        if ($this->getUnit() !== $distance->getUnit()) {
+            throw new RuntimeException(
+                sprintf('the units to add Distances needs to be the same %s instead', $distance->getUnit())
+            );
+        }
+        return new self($this->distance-$distance->getDistance(), $this->getUnit());
+    }
+
     public function isLessThan(Distance $distance): bool
     {
         if ($this->getUnit() !== $distance->getUnit()) {
