@@ -1,7 +1,5 @@
 # To execute the application follow the next steps
-`cd etc/devTools/`
-
-`docker-compose build`
+`cd etc/devTools/docker`
 
 `docker-compose up -d`
 
