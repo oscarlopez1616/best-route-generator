@@ -40,7 +40,7 @@ class GetTheShortestPathController extends Command
          * @var RouteDto $result
          */
         $result = $this->queryBus->handle(
-            new FindTheShortestPathQuery()
+            new FindTheShortestPathQuery('Beijing')
         );
 
         $output->write($result->__toString());

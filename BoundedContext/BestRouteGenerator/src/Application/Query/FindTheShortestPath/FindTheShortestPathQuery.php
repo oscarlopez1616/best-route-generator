@@ -7,4 +7,16 @@ use Common\Type\Query;
 
 class FindTheShortestPathQuery implements Query
 {
+    private string $cityFrom;
+
+    public function __construct(string $cityFrom)
+    {
+        $this->cityFrom = $cityFrom;
+    }
+
+    public function getCityFrom(): string
+    {
+        return $this->cityFrom;
+    }
+
 }

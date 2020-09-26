@@ -16,26 +16,25 @@ use Common\Type\QueryHandler;
 
 class FindTheShortestPathHandler implements QueryHandler
 {
+    private CityRepository $cityRepository;
     private DistanceService $distanceService;
     private OptimalPathService $optimalService;
-    private CityRepository $cityRepository;
-
 
     public function __construct(
+        CityRepository $cityRepository,
         DistanceService $distanceService,
-        OptimalPathService $optimalService,
-        CityRepository $cityRepository
+        OptimalPathService $optimalService
+
     ) {
+        $this->cityRepository = $cityRepository;
         $this->distanceService = $distanceService;
         $this->optimalService = $optimalService;
-        $this->cityRepository = $cityRepository;
     }
 
 
-    public function __invoke(FindTheShortestPathQuery $query): ?RouteDto
+    public function __invoke(FindTheShortestPathQuery $query): RouteDto
     {
         $cities = $this->cityRepository->findAllCities();
-
         $paths = [];
 
         foreach ($cities as $city) {
@@ -54,12 +53,10 @@ class FindTheShortestPathHandler implements QueryHandler
         }
 
         $graph = new Graph($paths);
-
         $route = $this->optimalService->findOptimalPath(
             $graph,
-            new Id('Beijing')
+            new Id($query->getCityFrom())
         );
-
         return RouteDto::assemble($route);
     }
 }
