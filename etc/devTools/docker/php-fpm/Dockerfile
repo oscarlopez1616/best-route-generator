@@ -2,9 +2,10 @@ FROM php:7.4.8-fpm
 
 ARG XDEBUG_VERSION=xdebug-2.9.6
 
-#in order to install soap, provisional fix
-RUN rm /etc/apt/preferences.d/no-debian-php
-RUN apt-get update && apt-get install -my procps acl
+RUN apt-get update && apt-get install -my procps acl unzip openssl libzip-dev libsodium-dev libxml2-dev
+
+# Install extensions
+RUN docker-php-ext-install zip intl
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

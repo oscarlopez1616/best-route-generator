@@ -3,7 +3,8 @@ version: '3.7'
 services:
 
     php-fpm:
-        image: oscarlopez1616/php-lite-7.4-fpm
+        build:
+            context: php-fpm
         container_name: zinio_best_route_generator_php-fpm
         working_dir: /var/www/data/BoundedContext/BestRouteGenerator
         volumes:
