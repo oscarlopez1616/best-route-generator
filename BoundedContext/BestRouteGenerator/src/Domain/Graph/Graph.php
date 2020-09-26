@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace BestRouteGenerator\Domain;
+namespace BestRouteGenerator\Domain\Graph;
 
 
 use Common\Type\Id;

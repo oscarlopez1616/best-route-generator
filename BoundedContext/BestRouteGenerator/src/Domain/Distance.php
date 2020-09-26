@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain;
 
 
+use BestRouteGenerator\Domain\Graph\Node;
 use Common\Type\ValueObject;
 use RuntimeException;
 
-class Distance extends ValueObject
+class Distance extends ValueObject implements Node
 {
     public const METERS = 'meters';
 
@@ -26,7 +27,7 @@ class Distance extends ValueObject
         return new self($distance, self::METERS);
     }
 
-    public function getDistance(): float
+    public function getValue(): float
     {
         return $this->distance;
     }
@@ -36,44 +37,44 @@ class Distance extends ValueObject
         return $this->unit;
     }
 
-    public function addDistance(Distance $distance): self
+    public function add(Node $distance): self
     {
         if ($this->getUnit() !== $distance->getUnit()) {
             throw new RuntimeException(
                 sprintf('the units to add Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
-        return new self($this->distance+$distance->getDistance(), $this->getUnit());
+        return new self($this->distance + $distance->getValue(), $this->getUnit());
     }
 
-    public function subtractDistance(Distance $distance): self
+    public function subtract(Node $distance): self
     {
         if ($this->getUnit() !== $distance->getUnit()) {
             throw new RuntimeException(
                 sprintf('the units to add Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
-        return new self($this->distance-$distance->getDistance(), $this->getUnit());
+        return new self($this->distance - $distance->getValue(), $this->getUnit());
     }
 
-    public function isLessThan(Distance $distance): bool
+    public function isLessThan(Node $distance): bool
     {
         if ($this->getUnit() !== $distance->getUnit()) {
             throw new RuntimeException(
                 sprintf('the units to compare Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
-        return $this->getDistance() < $distance->getDistance();
+        return $this->getValue() < $distance->getValue();
     }
 
-    public function isLessOrEqualThan(Distance $distance): bool
+    public function isLessOrEqualThan(Node $distance): bool
     {
         if ($this->getUnit() !== $distance->getUnit()) {
             throw new RuntimeException(
                 sprintf('the units to compare Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
-        return $this->getDistance() <= $distance->getDistance();
+        return $this->getValue() <= $distance->getValue();
     }
 
     /**
@@ -82,7 +83,7 @@ class Distance extends ValueObject
      */
     protected function equalValues(ValueObject $o): bool
     {
-        return $this->distance === $o->getDistance() && $this->getUnit() === $o->getUnit();
+        return $this->distance === $o->getValue() && $this->getUnit() === $o->getUnit();
     }
 
 

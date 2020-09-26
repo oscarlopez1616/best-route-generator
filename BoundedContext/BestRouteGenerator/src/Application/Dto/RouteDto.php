@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Application\Dto;
 
 
-use BestRouteGenerator\Domain\CityName;
 use BestRouteGenerator\Domain\Route;
+use Common\Type\Id;
 
 class RouteDto
 {
@@ -27,7 +27,7 @@ class RouteDto
     {
         return new self(
             array_map(
-                function (CityName $cityName): string {
+                function (Id $cityName): string {
                     return $cityName->getValue();
                 },
                 $route->getCityNames()
@@ -39,7 +39,7 @@ class RouteDto
     {
         $string = '';
         foreach ($this->cities as $city) {
-            $string .= $city."\n";
+            $string .= $city . "\n";
         }
         return $string;
     }

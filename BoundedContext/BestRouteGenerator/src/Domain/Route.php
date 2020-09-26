@@ -5,39 +5,31 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain;
 
 
+use Common\Type\Id;
 use Common\Type\ValueObject;
 
 class Route extends ValueObject
 {
     /**
-     * @var CityName[]
+     * @var Id[]
      */
     private array $cityNames;
-    private Distance $totalDistance;
 
     /**
      * Route constructor.
-     * @param City[] $cityNames
-     * @param Distance $totalDistance
+     * @param Id[] $cityNames
      */
-    public function __construct(array $cityNames, Distance $totalDistance)
+    public function __construct(array $cityNames)
     {
         $this->cityNames = $cityNames;
-        $this->totalDistance = $totalDistance;
     }
 
     /**
-     * @return CityName[]
+     * @return Id[]
      */
     public function getCityNames(): array
     {
         return $this->cityNames;
-    }
-
-    
-    public function getTotalDistance(): Distance
-    {
-        return $this->totalDistance;
     }
 
     /**

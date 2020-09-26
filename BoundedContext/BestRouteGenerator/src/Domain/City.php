@@ -6,19 +6,20 @@ namespace BestRouteGenerator\Domain;
 
 
 use Common\Type\AggregateRoot;
+use Common\Type\Id;
 
 class City extends AggregateRoot
 {
-    private CityName $cityName;
+    private Id $cityName;
     private Coordinate $coordinate;
 
-    public function __construct(CityName $cityName, Coordinate $coordinate)
+    public function __construct(Id $cityName, Coordinate $coordinate)
     {
         $this->cityName = $cityName;
         $this->coordinate = $coordinate;
     }
 
-    public function getId(): CityName
+    public function getId(): Id
     {
         return $this->cityName;
     }

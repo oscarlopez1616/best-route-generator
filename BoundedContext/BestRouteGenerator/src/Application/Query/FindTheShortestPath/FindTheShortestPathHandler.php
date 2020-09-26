@@ -6,15 +6,12 @@ namespace BestRouteGenerator\Application\Query\FindTheShortestPath;
 
 use BestRouteGenerator\Application\Dto\RouteDto;
 use BestRouteGenerator\Domain\CityRepository;
-use BestRouteGenerator\Domain\Distance;
 use BestRouteGenerator\Domain\DistanceService;
-use BestRouteGenerator\Domain\Graph;
-use BestRouteGenerator\Domain\OptimalPathService;
-use BestRouteGenerator\Domain\Path;
+use BestRouteGenerator\Domain\Graph\Graph;
+use BestRouteGenerator\Domain\Graph\OptimalPathService;
+use BestRouteGenerator\Domain\Graph\Path;
 use Common\Type\Id;
 use Common\Type\QueryHandler;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Throwable;
 
 
 class FindTheShortestPathHandler implements QueryHandler
@@ -56,33 +53,13 @@ class FindTheShortestPathHandler implements QueryHandler
             $paths[$city->getId()->getValue()] = new Path($distances);
         }
 
-        $combinationsWithStartingFromAllCities = null;
         $graph = new Graph($paths);
-        $bestRoute = [];
-        foreach ($paths as $pathId => $path) {
-            $combinationsWithStartingFromAllCities = $this->optimalService->findOptimalPathInMeters(
-                $graph,
-                new Id($pathId)
-            );
-            $graph->removePath(new Id($pathId));
-            try {
-                $bestRoute[] = $combinationsWithStartingFromAllCities->getCityNames()['1'];
-            }catch (Throwable $e){}
-        }
 
-        print_r($bestRoute);
-        die();
+        $route = $this->optimalService->findOptimalPath(
+            $graph,
+            new Id('Beijing')
+        );
 
-        $bestRoute = null;
-        $initialState = Distance::createInMeters(INF);
-
-        foreach ($combinationsWithStartingFromAllCities as $route) {
-            if ($route->getTotalDistance()->isLessThan($initialState)) {
-                $bestRoute = $route;
-                $initialState = $route->getTotalDistance();
-            }
-        }
-
-        return RouteDto::assemble($bestRoute);
+        return RouteDto::assemble($route);
     }
 }

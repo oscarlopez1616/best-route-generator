@@ -2,9 +2,10 @@
 declare(strict_types=1);
 
 
-namespace BestRouteGenerator\Domain;
+namespace BestRouteGenerator\Domain\Graph;
 
 
+use BestRouteGenerator\Domain\Distance;
 use Common\Type\Id;
 use Common\Type\ValueObject;
 use RuntimeException;
@@ -33,6 +34,26 @@ class Path extends ValueObject
         return $this->nodes;
     }
 
+    public function removeNode(Id $id): void
+    {
+        $this->getIndexByNodeId($id);
+        unset($this->nodes[$id->getValue()]);
+    }
+
+    public function getNodeIdWithMinDistance(): Id
+    {
+        $copyNodes = $this->nodes;
+        uasort(
+            $copyNodes,
+            function (Distance $a, Distance $b) {
+                return $a->subtract($b)->getValue();
+            }
+
+        );
+
+        return new Id(array_keys($copyNodes)[0]);
+    }
+
     /**
      * @param Id $id
      * @return string
@@ -46,26 +67,6 @@ class Path extends ValueObject
         }
 
         throw new RuntimeException(sprintf('this %s does not exist in this path', $id));
-    }
-
-    public function removeNode(Id $id): void
-    {
-        $this->getIndexByNodeId($id);
-        unset($this->nodes[$id->getValue()]);
-    }
-
-    public function getNodeIdWithMinimumDistance(): Id
-    {
-        $copyNodes = $this->nodes;
-        uasort(
-            $copyNodes,
-            function (Distance $a, Distance $b) {
-                return $a->subtractDistance($b)->getDistance();
-            }
-
-        );
-
-        return new Id(array_keys($copyNodes)[0]);
     }
 
 

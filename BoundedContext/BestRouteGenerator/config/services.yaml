@@ -25,11 +25,9 @@ services:
 
   BestRouteGenerator\Domain\DistanceService: '@BestRouteGenerator\Infrastructure\HarvesineDistanceService'
 
-  BestRouteGenerator\Infrastructure\DijkstraDistanceService:
-  BestRouteGenerator\Infrastructure\BruteForceOptimalPathService:
+  BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService:
 
-  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\BruteForceOptimalPathService'
-#  BestRouteGenerator\Domain\OptimalPathService: '@BestRouteGenerator\Infrastructure\DijkstraDistanceService'
+  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService'
 
   BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
     arguments:

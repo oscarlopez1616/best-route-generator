@@ -5,9 +5,9 @@ namespace BestRouteGenerator\Infrastructure\FileSystem;
 
 
 use BestRouteGenerator\Domain\City;
-use BestRouteGenerator\Domain\CityName;
 use BestRouteGenerator\Domain\CityRepository;
 use BestRouteGenerator\Domain\Coordinate;
+use Common\Type\Id;
 use http\Exception\RuntimeException;
 
 class FileSystemCityRepository implements CityRepository
@@ -36,7 +36,7 @@ class FileSystemCityRepository implements CityRepository
                 unset($parts[$length - 1], $parts[$length - 2]);
                 $cityName = implode(" ", $parts);
                 $cities[] = new City(
-                    new CityName($cityName),
+                    new Id($cityName),
                     new Coordinate((float)$latitude, (float)$longitude)
                 );
             }
