@@ -11,7 +11,10 @@ use BestRouteGenerator\Domain\DistanceService;
 use BestRouteGenerator\Domain\Graph;
 use BestRouteGenerator\Domain\OptimalPathService;
 use BestRouteGenerator\Domain\Path;
+use Common\Type\Id;
 use Common\Type\QueryHandler;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Throwable;
 
 
 class FindTheShortestPathHandler implements QueryHandler
@@ -40,23 +43,35 @@ class FindTheShortestPathHandler implements QueryHandler
 
         foreach ($cities as $city) {
             $distances = [];
-            $i = 0;
+
             foreach ($cities as $city1) {
                 if ($city->getId()->getValue() !== $city1->getId()->getValue()) {
-                    $distances[$i] = $this->distanceService->findDistanceInMetersBetween2GpsPointsService(
+                    $distances[$city1->getId()
+                        ->getValue()] = $this->distanceService->findDistanceInMetersBetween2GpsPointsService(
                         $city,
                         $city1
                     );
                 }
-                $i++;
             }
-            $paths[] = new Path($city->getId(), $distances);
+            $paths[$city->getId()->getValue()] = new Path($distances);
         }
 
-        $combinationsWithStartingFromAllCities = [];
-        foreach ($paths as $path) {
-            $combinationsWithStartingFromAllCities[] = $this->optimalService->findOptimalPathInMeters(new Graph($paths), $path->getId());
+        $combinationsWithStartingFromAllCities = null;
+        $graph = new Graph($paths);
+        $bestRoute = [];
+        foreach ($paths as $pathId => $path) {
+            $combinationsWithStartingFromAllCities = $this->optimalService->findOptimalPathInMeters(
+                $graph,
+                new Id($pathId)
+            );
+            $graph->removePath(new Id($pathId));
+            try {
+                $bestRoute[] = $combinationsWithStartingFromAllCities->getCityNames()['1'];
+            }catch (Throwable $e){}
         }
+
+        print_r($bestRoute);
+        die();
 
         $bestRoute = null;
         $initialState = Distance::createInMeters(INF);

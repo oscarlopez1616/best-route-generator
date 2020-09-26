@@ -28,47 +28,50 @@ class DijkstraDistanceService implements OptimalPathService
 
         $verticesCount = count($graph->getPaths());
 
-        for ($i = 0; $i < $verticesCount; ++$i) {
-            $distance[$i] = Distance::createInMeters(INF);
-            $shortestPathTreeSet[$i] = false;
+        $graphIds = array_keys($graph->getPaths());
+
+        foreach ($graphIds as $graphId) {
+            $distance[$graphId] = Distance::createInMeters(INF);
+            $shortestPathTreeSet[$graphId] = false;
         }
 
         $distance[$sourceAsIndex] = Distance::createInMeters(0);
 
-        for ($count = 0; $count < $verticesCount - 1; ++$count) {
-            $u = $this->minimumDistanceIndex($distance, $shortestPathTreeSet, $verticesCount);
-            $shortestPathTreeSet[$u] = true;
+        foreach ($graphIds as $pathsGraphId) {
+            $minimumDistanceIndex = $this->minimumDistanceIndex($distance, $shortestPathTreeSet, $graphIds);
+            $shortestPathTreeSet[$minimumDistanceIndex] = true;
 
-            for ($v = 0; $v < $verticesCount; ++$v) {
+            foreach ($graphIds as $graphId) {
                 if (
-                    !$shortestPathTreeSet[$v]
-                    && $distance[$u]->getDistance() !== Distance::createInMeters(INF)->getDistance()
-                    && (bool)$graph->getPaths()[$u]->getVertices()[$v]->getDistance()
-                    && $distance[$u]->addDistance($graph->getPaths()[$u]->getVertices()[$v])->isLessThan($distance[$v])
+                    !$shortestPathTreeSet[$graphId]
+                    && $distance[$minimumDistanceIndex]->getDistance() !== Distance::createInMeters(INF)->getDistance()
+                    && (bool)$graph->getPaths()[$minimumDistanceIndex]->getNodes()[$graphId]->getDistance()
+                    && $distance[$minimumDistanceIndex]->addDistance($graph->getPaths()[$minimumDistanceIndex]->getNodes()[$graphId])
+                        ->isLessThan($distance[$graphId])
                 ) {
-                    $distance[$v] = $distance[$u]->addDistance($graph->getPaths()[$u]->getVertices()[$v]);
+                    $distance[$graphId] = $distance[$minimumDistanceIndex]->addDistance($graph->getPaths()[$minimumDistanceIndex]->getNodes()[$graphId]);
                 }
             }
         }
 
-        return $this->formatResult($graph->getPaths(), $distance, $verticesCount);
+        return $this->formatResult($graph->getPaths(), $distance, $graphIds);
     }
 
     /**
      * @param Distance[] $distance
      * @param bool[] $shortestPathTreeSet
-     * @param int $verticesCount
-     * @return int
+     * @param string[] $graphIds
+     * @return string
      */
-    private function minimumDistanceIndex(array $distance, array $shortestPathTreeSet, int $verticesCount): int
+    private function minimumDistanceIndex(array $distance, array $shortestPathTreeSet, array $graphIds): string
     {
         $min = Distance::createInMeters(INF);
         $minIndex = 0;
 
-        for ($v = 0; $v < $verticesCount; ++$v) {
-            if ($shortestPathTreeSet[$v] === false && $distance[$v]->isLessOrEqualThan($min)) {
-                $min = $distance[$v];
-                $minIndex = $v;
+        foreach ($graphIds as $graphId) {
+            if ($shortestPathTreeSet[$graphId] === false && $distance[$graphId]->isLessOrEqualThan($min)) {
+                $min = $distance[$graphId];
+                $minIndex = $graphId;
             }
         }
 
@@ -78,19 +81,18 @@ class DijkstraDistanceService implements OptimalPathService
     /**
      * @param Path[] $graph
      * @param Distance[] $distance
-     * @param int $verticesCount
+     * @param string[] $graphIds
      * @return Route
      */
-    private function formatResult(array $graph, array $distance, int $verticesCount): Route
+    private function formatResult(array $graph, array $distance, array $graphIds): Route
     {
         $result = [];
         $totalDistance = 0;
 
-        for ($i = 0; $i < $verticesCount; ++$i) {
-            $result[$graph[$i]->getId()->getValue()] = $distance[$i];
-            $totalDistance += $distance[$i]->getDistance();
+        foreach ($graphIds as $graphId) {
+            $result[$graphId] = $distance[$graphId];
+            $totalDistance += $distance[$graphId]->getDistance();
         }
-        asort($result);
 
         $cities = [];
 

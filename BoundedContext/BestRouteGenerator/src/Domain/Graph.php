@@ -28,17 +28,23 @@ class Graph extends ValueObject
 
     /**
      * @param Id $id
-     * @return int
+     * @return string
      */
-    public function getIndexByPathId(Id $id): int
+    public function getIndexByPathId(Id $id): string
     {
-        foreach ($this->paths as $index => $path) {
-            if ($path->getId()->getValue() === $id->getValue()) {
-                return $index;
+        foreach ($this->paths as $pathId => $path) {
+            if ($pathId === $id->getValue()) {
+                return $pathId;
             }
         }
 
         throw new RuntimeException(sprintf('this %s does not exist in this graph', $id));
+    }
+
+    public function removePath(Id $id): void
+    {
+        $this->getIndexByPathId($id);
+        unset($this->paths[$id->getValue()]);
     }
 
     /**
