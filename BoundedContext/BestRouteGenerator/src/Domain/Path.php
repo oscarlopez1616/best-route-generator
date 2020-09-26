@@ -18,11 +18,11 @@ class Path extends ValueObject
 
     /**
      * Path constructor.
-     * @param Distance[] $vertices
+     * @param Distance[] $nodes
      */
-    public function __construct(array $vertices)
+    public function __construct(array $nodes)
     {
-        $this->nodes = $vertices;
+        $this->nodes = $nodes;
     }
 
     /**
