@@ -31,13 +31,13 @@ class FileSystemCityRepository implements CityRepository
             while (($line = fgets($file)) !== false) {
                 $parts = explode(" ", $line);
                 $length = count($parts);
-                $latitude = $parts[$length - 2];
-                $longitude = $parts[$length - 1];
+                $latitude = (float)$parts[$length - 2];
+                $longitude = (float)$parts[$length - 1];
                 unset($parts[$length - 1], $parts[$length - 2]);
                 $cityName = implode(" ", $parts);
                 $cities[] = new City(
                     new Id($cityName),
-                    new Coordinate((float)$latitude, (float)$longitude)
+                    new Coordinate($latitude, $longitude)
                 );
             }
             fclose($file);
