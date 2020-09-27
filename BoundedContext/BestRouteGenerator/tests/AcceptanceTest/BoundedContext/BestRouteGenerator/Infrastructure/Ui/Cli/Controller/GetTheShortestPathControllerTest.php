@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BestRouteGenerator\Tests\AcceptanceTest\BestRouteGenerator\Infrastructure\Ui\Controller;
+namespace BestRouteGenerator\Tests\AcceptanceTest\BoundedContext\BestRouteGenerator\Infrastructure\Ui\Cli\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;

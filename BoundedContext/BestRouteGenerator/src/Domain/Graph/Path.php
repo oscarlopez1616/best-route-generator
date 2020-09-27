@@ -6,7 +6,7 @@ namespace BestRouteGenerator\Domain\Graph;
 
 
 use BestRouteGenerator\Domain\Distance;
-use Common\Domain\Exception\DomainException;
+use Common\Type\Exception\DomainException;
 use Common\Type\Id;
 use Common\Type\ValueObject;
 

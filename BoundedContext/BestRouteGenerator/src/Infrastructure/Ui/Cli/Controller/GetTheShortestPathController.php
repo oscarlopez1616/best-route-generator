@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BestRouteGenerator\Infrastructure\Ui\Controller;
+namespace BestRouteGenerator\Infrastructure\Ui\Cli\Controller;
 
 use BestRouteGenerator\Application\Dto\RouteDto;
 use BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathQuery;

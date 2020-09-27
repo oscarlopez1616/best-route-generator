@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Common\Domain\Exception;
+namespace Common\Type\Exception;
 
 use DomainException as SPLDomainException;
 

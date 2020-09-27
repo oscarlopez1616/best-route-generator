@@ -6,7 +6,7 @@ namespace BestRouteGenerator\Domain;
 
 
 use BestRouteGenerator\Domain\Graph\Node;
-use Common\Domain\Exception\DomainException;
+use Common\Type\Exception\DomainException;
 use Common\Type\ValueObject;
 
 class Distance extends ValueObject implements Node

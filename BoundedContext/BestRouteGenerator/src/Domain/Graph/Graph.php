@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain\Graph;
 
 
-use Common\Domain\Exception\DomainException;
+use Common\Type\Exception\DomainException;
 use Common\Type\Id;
 use Common\Type\ValueObject;
 use Throwable;

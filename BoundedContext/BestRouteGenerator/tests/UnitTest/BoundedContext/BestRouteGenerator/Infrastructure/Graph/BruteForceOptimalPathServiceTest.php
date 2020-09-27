@@ -8,7 +8,7 @@ namespace BestRouteGenerator\Tests\UnitTest\BoundedContext\BestRouteGenerator\In
 use BestRouteGenerator\Domain\Route;
 use BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService;
 use BestRouteGenerator\Tests\ObjectMother\BoundedContext\BestRouteGenerator\Domain\GraphObjectMother;
-use Common\Domain\Exception\DomainException;
+use Common\Type\Exception\DomainException;
 use Common\Type\Id;
 use PHPUnit\Framework\TestCase;
 
