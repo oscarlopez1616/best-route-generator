@@ -25,6 +25,8 @@ services:
 
   BestRouteGenerator\Domain\DistanceService: '@BestRouteGenerator\Infrastructure\HarvesineDistanceService'
 
+  BestRouteGenerator\Domain\Graph\GraphBuilder:
+
   BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService:
 
   BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService'

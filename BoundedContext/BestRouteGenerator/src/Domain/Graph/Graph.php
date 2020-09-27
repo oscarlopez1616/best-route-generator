@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain\Graph;
 
 
+use BestRouteGenerator\Domain\City;
+use Common\Domain\Exception\DomainException;
 use Common\Type\Id;
 use Common\Type\ValueObject;
-use RuntimeException;
 use Throwable;
 
 class Graph extends ValueObject
@@ -31,8 +32,8 @@ class Graph extends ValueObject
     {
         try {
             return $this->paths[$id->getValue()];
-        }catch (Throwable $e){
-            throw new RuntimeException(sprintf('the path with id %s does not exist in this graph', $id));
+        } catch (Throwable $e) {
+            throw new DomainException(sprintf('the path with id %s does not exist in this graph', $id));
         }
     }
 
@@ -48,12 +49,12 @@ class Graph extends ValueObject
             }
         }
 
-        throw new RuntimeException(sprintf('this %s does not exist in this graph', $id));
+        throw new DomainException(sprintf('this %s does not exist in this graph', $id));
     }
 
     public function removePath(?Id $id): void
     {
-        if($id === null){
+        if ($id === null) {
             return;
         }
         $this->getIndexByPathId($id);

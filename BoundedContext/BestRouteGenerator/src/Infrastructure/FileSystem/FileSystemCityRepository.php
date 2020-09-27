@@ -7,8 +7,8 @@ namespace BestRouteGenerator\Infrastructure\FileSystem;
 use BestRouteGenerator\Domain\City;
 use BestRouteGenerator\Domain\CityRepository;
 use BestRouteGenerator\Domain\Coordinate;
+use Common\Domain\Exception\DomainEntityNotFoundException;
 use Common\Type\Id;
-use http\Exception\RuntimeException;
 
 class FileSystemCityRepository implements CityRepository
 {
@@ -44,7 +44,9 @@ class FileSystemCityRepository implements CityRepository
             return $cities;
         }
 
-        throw new RuntimeException('Error opening File');
+        throw new DomainEntityNotFoundException(
+            sprintf('Due to error opening file: %s', $this->pathCityFile)
+        );
     }
 
 

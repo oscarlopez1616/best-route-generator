@@ -6,9 +6,9 @@ namespace BestRouteGenerator\Domain\Graph;
 
 
 use BestRouteGenerator\Domain\Distance;
+use Common\Domain\Exception\DomainException;
 use Common\Type\Id;
 use Common\Type\ValueObject;
-use RuntimeException;
 
 class Path extends ValueObject
 {
@@ -66,7 +66,7 @@ class Path extends ValueObject
             }
         }
 
-        throw new RuntimeException(sprintf('this %s does not exist in this path', $id));
+        throw new DomainException(sprintf('this %s does not exist in this path', $id));
     }
 
 

@@ -6,8 +6,8 @@ namespace BestRouteGenerator\Domain;
 
 
 use BestRouteGenerator\Domain\Graph\Node;
+use Common\Domain\Exception\DomainException;
 use Common\Type\ValueObject;
-use RuntimeException;
 
 class Distance extends ValueObject implements Node
 {
@@ -40,7 +40,7 @@ class Distance extends ValueObject implements Node
     public function add(Node $distance): self
     {
         if ($this->getUnit() !== $distance->getUnit()) {
-            throw new RuntimeException(
+            throw new DomainException(
                 sprintf('the units to add Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
@@ -50,7 +50,7 @@ class Distance extends ValueObject implements Node
     public function subtract(Node $distance): self
     {
         if ($this->getUnit() !== $distance->getUnit()) {
-            throw new RuntimeException(
+            throw new DomainException(
                 sprintf('the units to add Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
@@ -60,7 +60,7 @@ class Distance extends ValueObject implements Node
     public function isLessThan(Node $distance): bool
     {
         if ($this->getUnit() !== $distance->getUnit()) {
-            throw new RuntimeException(
+            throw new DomainException(
                 sprintf('the units to compare Distances needs to be the same %s instead', $distance->getUnit())
             );
         }
@@ -70,7 +70,7 @@ class Distance extends ValueObject implements Node
     public function isLessOrEqualThan(Node $distance): bool
     {
         if ($this->getUnit() !== $distance->getUnit()) {
-            throw new RuntimeException(
+            throw new DomainException(
                 sprintf('the units to compare Distances needs to be the same %s instead', $distance->getUnit())
             );
         }

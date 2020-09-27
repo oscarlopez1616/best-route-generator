@@ -76,4 +76,9 @@
     </phpInfoCache>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <phpunit_by_interpreter interpreter_id="b3884afd-69b5-43a8-ac8e-63b959364089" load_method="PHPUNIT_PHAR" configuration_file_path="/var/www/data/BoundedContext/BestRouteGenerator/phpunit.xml.dist" custom_loader_path="" phpunit_phar_path="/var/www/data/BoundedContext/BestRouteGenerator/vendor/bin/simple-phpunit" use_configuration_file="true" />
+    </phpunit_settings>
+  </component>
 </project>
