@@ -47,7 +47,7 @@ class Path extends ValueObject
         $copyNodes = $this->nodes;
         uasort(
             $copyNodes,
-            function (Distance $a, Distance $b) {
+            static function (Distance $a, Distance $b) {
                 return $a->subtract($b)->getValue();
             }
 

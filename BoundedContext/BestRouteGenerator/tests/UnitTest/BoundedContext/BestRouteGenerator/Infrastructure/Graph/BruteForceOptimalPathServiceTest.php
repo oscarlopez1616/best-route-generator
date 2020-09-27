@@ -26,7 +26,7 @@ class BruteForceOptimalPathServiceTest extends TestCase
             new Id('Barcelona')
         );
 
-        self::assertEquals(
+        $this->assertEquals(
             new Route(
                 [
                     new Id('Barcelona'),

@@ -31,7 +31,7 @@ class HarvesineDistanceServiceTest extends TestCase
             )
         );
 
-        self::assertEquals(Distance::createInMeters(2084050.496008833), $distance);
+        $this->assertEquals(Distance::createInMeters(2084050.496008833), $distance);
     }
 
     /**
@@ -51,7 +51,7 @@ class HarvesineDistanceServiceTest extends TestCase
             ),
         );
 
-        self::assertEquals(Distance::createInMeters(0), $distance);
+        $this->assertEquals(Distance::createInMeters(0), $distance);
     }
 
 }

@@ -27,7 +27,7 @@ final class RouteDto
     {
         return new self(
             array_map(
-                function (Id $cityName): string {
+                static function (Id $cityName): string {
                     return $cityName->getValue();
                 },
                 $route->getCityNames()

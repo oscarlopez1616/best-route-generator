@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain\Graph;
 
 
-use BestRouteGenerator\Domain\City;
 use Common\Domain\Exception\DomainException;
 use Common\Type\Id;
 use Common\Type\ValueObject;

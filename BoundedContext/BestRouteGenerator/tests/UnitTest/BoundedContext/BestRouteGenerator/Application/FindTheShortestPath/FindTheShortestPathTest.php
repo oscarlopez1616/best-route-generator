@@ -59,7 +59,7 @@ class FindTheShortestPathTest extends TestCase
 
         $route = $findTheShortestPathHandler->__invoke($findTheShortestPathQuery);
 
-        self::assertEquals(
+        $this->assertEquals(
             RouteDto::assemble(
                 new Route(
                     [
