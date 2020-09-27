@@ -19,7 +19,7 @@ class BruteForceOptimalPathService implements OptimalPathService
         $totalNodes = count($graph->getPaths());
         for ($i = 0; $i < $totalNodes - 1; $i++) {
             $previousSource = $source;
-            $graph->removePath($excludeId);
+            $graph = $graph->removePath($excludeId);
             $source = $this->getNextIdWithMinDistanceFromSource($graph, $source);
             $route[] = $source;
             $excludeId = $previousSource;

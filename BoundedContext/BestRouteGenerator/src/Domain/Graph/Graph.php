@@ -52,16 +52,19 @@ class Graph extends ValueObject
         throw new DomainException(sprintf('this %s does not exist in this graph', $id));
     }
 
-    public function removePath(?Id $id): void
+    public function removePath(?Id $id): self
     {
         if ($id === null) {
-            return;
+            return $this;
         }
         $this->getIndexByPathId($id);
-        unset($this->paths[$id->getValue()]);
-        foreach ($this->paths as $path) {
-            $path->removeNode($id);
+        $paths = $this->paths;
+        unset($paths[$id->getValue()]);
+        $pathsWithIdDrooped = [];
+        foreach ($paths as $pathId => $path) {
+            $pathsWithIdDrooped[$pathId] = $path->removeNode($id);
         }
+        return new Graph($pathsWithIdDrooped);
     }
 
     /**

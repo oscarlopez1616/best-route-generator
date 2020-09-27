@@ -34,10 +34,12 @@ class Path extends ValueObject
         return $this->nodes;
     }
 
-    public function removeNode(Id $id): void
+    public function removeNode(Id $id): self
     {
         $this->getIndexByNodeId($id);
-        unset($this->nodes[$id->getValue()]);
+        $nodes = $this->nodes;
+        unset($nodes[$id->getValue()]);
+        return new self($nodes);
     }
 
     public function getNodeIdWithMinDistance(): Id
