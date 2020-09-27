@@ -32,7 +32,7 @@ class FindTheShortestPathTest extends TestCase
         $cityRepository = $this->createMock(CityRepository::class);
 
         $cityRepository
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findAllCities')
             ->willReturn(
                 [
@@ -59,7 +59,7 @@ class FindTheShortestPathTest extends TestCase
 
         $route = $findTheShortestPathHandler->__invoke($findTheShortestPathQuery);
 
-        $this->assertEquals(
+        self::assertEquals(
             RouteDto::assemble(
                 new Route(
                     [
@@ -88,7 +88,7 @@ class FindTheShortestPathTest extends TestCase
         $graph = GraphObjectMother::adjacencyGraphWithExampleDataAllNodesConnected();
 
         $graphBuilder
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('buildGraphFromCitiesWithAllNodesConnectedBetweenThem')
             ->with([])
             ->willReturn($graph);
