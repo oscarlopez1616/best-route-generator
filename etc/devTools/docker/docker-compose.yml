@@ -2,13 +2,11 @@ version: '3.7'
 
 services:
 
-    php-fpm:
-        image: oscarlopez1616/php-lite-7.4-fpm
-        container_name: zinio_best_route_generator_php-fpm
-        working_dir: /var/www/data/BoundedContext/BestRouteGenerator
-        volumes:
-            - type: bind
-              source: ../../../
-              target: /var/www/data
-        ports:
-            - "9901:9901"
+  php-fpm:
+    image: oscarlopez1616/php-lite-7.4-fpm
+    container_name: zinio_best_route_generator_php-fpm
+    working_dir: /var/www/data/BoundedContext/BestRouteGenerator
+    volumes:
+      - ../../../:/var/www/data:delegated
+    ports:
+      - "9901:9901"
