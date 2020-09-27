@@ -25,7 +25,7 @@ class FindTheShortestPathTest extends TestCase
     /**
      * @test
      */
-    public function handleShouldReturnARoute(): void
+    public function itShouldReturnARoute(): void
     {
         $findTheShortestPathQuery = new FindTheShortestPathQuery('Beijing');
 
@@ -78,7 +78,7 @@ class FindTheShortestPathTest extends TestCase
     /**
      * @test
      */
-    public function handleShouldThrownDomainException(): void
+    public function itShouldThrownDomainException(): void
     {
         $this->expectException(DomainException::class);
         $findTheShortestPathQuery = new FindTheShortestPathQuery('');
