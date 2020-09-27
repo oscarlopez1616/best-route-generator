@@ -5,8 +5,6 @@ the root directory for the BestRouteGenerator application is in BoundedContext/B
 ## To execute the application follow the next steps
 `cd etc/devTools/docker`
 
-`cp .env.dist .env`
-
 `docker-compose up -d`
 
 `docker-compose exec php-fpm composer install`
