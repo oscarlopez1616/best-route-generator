@@ -6,7 +6,7 @@ namespace BestRouteGenerator\Application\Query\FindTheShortestPath;
 
 use BestRouteGenerator\Application\Dto\RouteDto;
 use BestRouteGenerator\Domain\CityRepository;
-use BestRouteGenerator\Domain\Graph\GraphBuilder;
+use BestRouteGenerator\Domain\Graph\AdjacencyGraphBuilder;
 use BestRouteGenerator\Domain\Graph\OptimalPathService;
 use Common\Type\Id;
 use Common\Type\QueryHandler;
@@ -15,24 +15,24 @@ use Common\Type\QueryHandler;
 class FindTheShortestPathHandler implements QueryHandler
 {
     private CityRepository $cityRepository;
-    private GraphBuilder $graphBuilder;
+    private AdjacencyGraphBuilder $adjacencyGraphBuilder;
     private OptimalPathService $optimalService;
 
     public function __construct(
         CityRepository $cityRepository,
-        GraphBuilder $graphBuilder,
+        AdjacencyGraphBuilder $adjacencyGraphBuilder,
         OptimalPathService $optimalService
 
     ) {
         $this->cityRepository = $cityRepository;
-        $this->graphBuilder = $graphBuilder;
+        $this->adjacencyGraphBuilder = $adjacencyGraphBuilder;
         $this->optimalService = $optimalService;
     }
 
 
     public function __invoke(FindTheShortestPathQuery $query): RouteDto
     {
-        $graph = $this->graphBuilder->buildGraphFromCitiesWithAllNodesConnectedBetweenThem(
+        $graph = $this->adjacencyGraphBuilder->buildGraphFromCitiesWithAllNodesConnectedBetweenThem(
             $this->cityRepository->findAllCities()
         );
         $route = $this->optimalService->findOptimalPath(

@@ -8,7 +8,7 @@ namespace BestRouteGenerator\Domain\Graph;
 use BestRouteGenerator\Domain\City;
 use BestRouteGenerator\Domain\DistanceService;
 
-class GraphBuilder
+class AdjacencyGraphBuilder
 {
     private DistanceService $distanceService;
 
