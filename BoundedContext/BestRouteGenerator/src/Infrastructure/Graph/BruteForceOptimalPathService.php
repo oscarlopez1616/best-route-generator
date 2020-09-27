@@ -20,7 +20,7 @@ class BruteForceOptimalPathService implements OptimalPathService
         for ($i = 0; $i < $totalNodes - 1; $i++) {
             $previousSource = $source;
             $graph->removePath($excludeId);
-            $source = $this->getNextCityWithMinDistanceFromSource($graph, $source);
+            $source = $this->getNextIdWithMinDistanceFromSource($graph, $source);
             $route[] = $source;
             $excludeId = $previousSource;
         }
@@ -33,7 +33,7 @@ class BruteForceOptimalPathService implements OptimalPathService
      * @param Id $source
      * @return Id
      */
-    private function getNextCityWithMinDistanceFromSource(Graph $graph, Id $source): Id
+    private function getNextIdWithMinDistanceFromSource(Graph $graph, Id $source): Id
     {
         return $graph->getPathByPathId($source)->getNodeIdWithMinDistance();
     }
