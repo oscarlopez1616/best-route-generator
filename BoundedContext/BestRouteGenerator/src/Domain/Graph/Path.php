@@ -78,7 +78,7 @@ class Path extends ValueObject
      */
     protected function equalValues(ValueObject $o): bool
     {
-        //TODO finish
+        // TODO: Implement equalValues() method.
     }
 
 
