@@ -12,6 +12,3 @@ services:
               target: /var/www/data
         ports:
             - "9901:9901"
-
-volumes:
-    volume_zinio_best_route_generator_neo4j:
