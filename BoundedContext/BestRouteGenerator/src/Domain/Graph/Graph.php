@@ -64,7 +64,7 @@ class Graph extends ValueObject
         foreach ($paths as $pathId => $path) {
             $pathsWithIdDrooped[$pathId] = $path->removeNode($id);
         }
-        return new Graph($pathsWithIdDrooped);
+        return new self($pathsWithIdDrooped);
     }
 
     /**
