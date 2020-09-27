@@ -2,6 +2,9 @@
 
 the root directory for the BestRouteGenerator application is in BoundedContext/BestRouteGenerator/ 
 
+to execute this code it's needed to have docker and docker-compose in your machine 
+(this code has been tested with docker 19.03.8 and docker-compose 1.27.4)
+
 ## To execute the application follow the next steps
 `cd etc/devTools/docker`
 
