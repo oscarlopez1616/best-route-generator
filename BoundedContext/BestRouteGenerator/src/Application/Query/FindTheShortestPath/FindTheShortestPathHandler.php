@@ -32,7 +32,9 @@ class FindTheShortestPathHandler implements QueryHandler
 
     public function __invoke(FindTheShortestPathQuery $query): RouteDto
     {
-        $graph = $this->graphBuilder->buildGraphFromCities($this->cityRepository->findAllCities());
+        $graph = $this->graphBuilder->buildGraphFromCitiesWithAllNodesConnectedBetweenThem(
+            $this->cityRepository->findAllCities()
+        );
         $route = $this->optimalService->findOptimalPath(
             $graph,
             new Id($query->getCityFrom())

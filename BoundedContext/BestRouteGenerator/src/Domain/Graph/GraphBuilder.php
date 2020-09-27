@@ -22,7 +22,7 @@ class GraphBuilder
      * @param City[] $cities
      * @return Graph
      */
-    public function buildGraphFromCities(array $cities): Graph
+    public function buildGraphFromCitiesWithAllNodesConnectedBetweenThem(array $cities): Graph
     {
         $paths = [];
 
