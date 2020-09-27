@@ -7,7 +7,7 @@ namespace BestRouteGenerator\Application\Dto;
 use BestRouteGenerator\Domain\Route;
 use Common\Type\Id;
 
-class RouteDto
+final class RouteDto
 {
     /**
      * @var string[]

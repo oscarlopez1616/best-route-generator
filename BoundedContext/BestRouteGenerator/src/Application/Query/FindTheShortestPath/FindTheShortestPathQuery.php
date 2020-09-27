@@ -5,7 +5,7 @@ namespace BestRouteGenerator\Application\Query\FindTheShortestPath;
 
 use Common\Type\Query;
 
-class FindTheShortestPathQuery implements Query
+final class FindTheShortestPathQuery implements Query
 {
     private string $cityFrom;
 
