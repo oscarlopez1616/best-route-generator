@@ -6,7 +6,7 @@ namespace BestRouteGenerator\Tests\UnitTest\BoundedContext\BestRouteGenerator\Ap
 
 
 use BestRouteGenerator\Application\Dto\RouteDto;
-use BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathHandler;
+use BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathQueryHandler;
 use BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathQuery;
 use BestRouteGenerator\Domain\City;
 use BestRouteGenerator\Domain\CityRepository;
@@ -51,7 +51,7 @@ class FindTheShortestPathTest extends TestCase
                 ]
             );
 
-        $findTheShortestPathHandler = new FindTheShortestPathHandler(
+        $findTheShortestPathHandler = new FindTheShortestPathQueryHandler(
             $cityRepository,
             new AdjacencyGraphBuilder(new HarvesineDistanceService()),
             new BruteForceOptimalPathService()
@@ -93,7 +93,7 @@ class FindTheShortestPathTest extends TestCase
             ->with([])
             ->willReturn($graph);
 
-        $findTheShortestPathHandler = new FindTheShortestPathHandler(
+        $findTheShortestPathHandler = new FindTheShortestPathQueryHandler(
             $cityRepository,
             $graphBuilder,
             new BruteForceOptimalPathService()

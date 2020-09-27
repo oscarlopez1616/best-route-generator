@@ -12,7 +12,7 @@ use Common\Type\Id;
 use Common\Type\QueryHandler;
 
 
-class FindTheShortestPathHandler implements QueryHandler
+class FindTheShortestPathQueryHandler implements QueryHandler
 {
     private CityRepository $cityRepository;
     private AdjacencyGraphBuilder $adjacencyGraphBuilder;

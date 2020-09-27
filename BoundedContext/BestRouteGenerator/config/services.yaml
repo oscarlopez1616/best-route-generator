@@ -19,7 +19,7 @@ services:
     arguments:
       $bus: '@siroko_core.query_bus'
 
-  BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathHandler:
+  BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathQueryHandler:
 
   BestRouteGenerator\Infrastructure\HarvesineDistanceService:
 
