@@ -1,4 +1,6 @@
-# Info for The BestRouteGenerator BoundedContext: 
+# Info for The BestRouteGenerator BoundedContext:
+
+the root directory for the BestRouteGenerator application is in BoundedContext/BestRouteGenerator/ 
 
 ## To execute the application follow the next steps
 `cd etc/devTools/docker`
