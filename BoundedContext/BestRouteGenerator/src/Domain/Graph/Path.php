@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BestRouteGenerator\Domain\Graph;
 
 
+use BestRouteGenerator\Domain\Coordinate;
 use BestRouteGenerator\Domain\Distance;
 use Common\Type\Exception\DomainException;
 use Common\Type\Id;
@@ -17,13 +18,18 @@ class Path extends ValueObject
      */
     private array $nodes;
 
+
+    private Coordinate $coordinate;
+
     /**
      * Path constructor.
      * @param Distance[] $nodes
+     * @param Coordinate $coordinate
      */
-    public function __construct(array $nodes)
+    public function __construct(array $nodes, Coordinate $coordinate)
     {
         $this->nodes = $nodes;
+        $this->coordinate = $coordinate;
     }
 
     /**
@@ -34,12 +40,19 @@ class Path extends ValueObject
         return $this->nodes;
     }
 
+
+    public function getCoordinate(): Coordinate
+    {
+        return $this->coordinate;
+    }
+
+
     public function removeNode(Id $id): self
     {
         $this->getIndexByNodeId($id);
         $nodes = $this->nodes;
         unset($nodes[$id->getValue()]);
-        return new self($nodes);
+        return new self($nodes, $this->coordinate);
     }
 
     public function getNodeIdWithMinDistance(): Id

@@ -30,15 +30,15 @@ class AdjacencyGraphBuilder
             $distances = [];
 
             foreach ($cities as $city1) {
-                if ($city->getId()->getValue() !== $city1->getId()->getValue()) {
+                //if ($city->getId()->getValue() !== $city1->getId()->getValue()) {
                     $distances[$city1->getId()
                         ->getValue()] = $this->distanceService->findDistanceInMetersBetween2GpsPointsService(
                         $city,
                         $city1
                     );
-                }
+                //}
             }
-            $paths[$city->getId()->getValue()] = new Path($distances);
+            $paths[$city->getId()->getValue()] = new Path($distances,$city->getCoordinate());
         }
 
         return new Graph($paths);

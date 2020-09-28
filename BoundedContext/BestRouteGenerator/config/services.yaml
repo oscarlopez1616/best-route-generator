@@ -29,7 +29,11 @@ services:
 
   BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService:
 
-  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService'
+  BestRouteGenerator\Infrastructure\Graph\BranchAndBoundOptimalDistanceService\BranchAndBoundDistanceOptimalDistance:
+    factory: ['BestRouteGenerator\Infrastructure\Graph\BranchAndBoundOptimalDistanceService\BranchAndBoundDistanceOptimalDistance','createInstances']
+
+  #  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService'
+  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\BranchAndBoundOptimalDistanceService\BranchAndBoundDistanceOptimalDistance'
 
   BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
     arguments:

@@ -8,6 +8,7 @@ use BestRouteGenerator\Application\Dto\RouteDto;
 use BestRouteGenerator\Domain\CityRepository;
 use BestRouteGenerator\Domain\Graph\AdjacencyGraphBuilder;
 use BestRouteGenerator\Domain\Graph\OptimalPathService;
+use BestRouteGenerator\Infrastructure\Graph\TspBranchBound;
 use Common\Type\Id;
 use Common\Type\QueryHandler;
 
@@ -35,10 +36,12 @@ class FindTheShortestPathQueryHandler implements QueryHandler
         $graph = $this->adjacencyGraphBuilder->buildGraphFromCitiesWithAllNodesConnectedBetweenThem(
             $this->cityRepository->findAllCities()
         );
+
         $route = $this->optimalService->findOptimalPath(
             $graph,
             new Id($query->getCityFrom())
         );
+
         return RouteDto::assemble($route);
     }
 }
