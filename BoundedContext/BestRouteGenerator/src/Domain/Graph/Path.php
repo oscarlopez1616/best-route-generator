@@ -55,7 +55,7 @@ class Path extends ValueObject
         return new self($nodes, $this->coordinate);
     }
 
-    public function getNodeIdWithMinDistance(): Id
+    public function getNodeIdWithMinDistance(Id $source): Id
     {
         $copyNodes = $this->nodes;
         uasort(
@@ -65,6 +65,10 @@ class Path extends ValueObject
             }
 
         );
+
+        if ($source->getValue() === array_keys($copyNodes)[0]) {
+            return new Id(array_keys($copyNodes)[1]);
+        }
 
         return new Id(array_keys($copyNodes)[0]);
     }

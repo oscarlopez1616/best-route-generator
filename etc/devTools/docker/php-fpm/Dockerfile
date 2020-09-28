@@ -2,7 +2,7 @@ FROM php:7.4.8-fpm
 
 ARG XDEBUG_VERSION=xdebug-2.9.6
 
-RUN apt-get update && apt-get install -my procps acl unzip openssl libzip-dev libsodium-dev libxml2-dev
+RUN apt-get update && apt-get install -my procps git acl unzip openssl libzip-dev libsodium-dev libxml2-dev
 
 # Install extensions
 RUN docker-php-ext-install zip intl

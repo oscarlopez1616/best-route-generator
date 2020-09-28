@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  BestRouteGenerator\Infrastructure\Graph\BranchAndBoundOptimalDistanceService\BranchAndBoundDistanceOptimalDistance:
+    factory: ['BestRouteGenerator\Infrastructure\Graph\BranchAndBoundOptimalDistanceService\BranchAndBoundDistanceOptimalDistance','createInstances']
+    shared: false
+
+  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\BranchAndBoundOptimalDistanceService\BranchAndBoundDistanceOptimalDistance'

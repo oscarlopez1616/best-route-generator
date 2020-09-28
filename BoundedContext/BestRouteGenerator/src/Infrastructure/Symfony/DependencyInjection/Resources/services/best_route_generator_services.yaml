@@ -1,0 +1,31 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  BestRouteGenerator\Infrastructure\Ui\Cli\Controller\:
+    resource: '%kernel.project_dir%/src/Infrastructure/Ui/Cli/Controller'
+    tags: [ console.command ]
+
+  Common\Type\QueryBus:
+    arguments:
+      $bus: '@siroko_core.query_bus'
+
+  BestRouteGenerator\Application\Query\FindTheShortestPath\FindTheShortestPathQueryHandler:
+
+  BestRouteGenerator\Infrastructure\HarvesineDistanceService:
+
+  BestRouteGenerator\Domain\DistanceService: '@BestRouteGenerator\Infrastructure\HarvesineDistanceService'
+
+  BestRouteGenerator\Domain\Graph\AdjacencyGraphBuilder:
+
+  BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService:
+
+  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService'
+
+  BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
+    arguments:
+      $citiesFile: "%kernel.project_dir%/%env(CITIES_FILE)%"
+
+  BestRouteGenerator\Domain\CityRepository: '@BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository'

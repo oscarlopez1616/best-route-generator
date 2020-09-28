@@ -1,0 +1,2 @@
+imports:
+  - { resource: services/best_route_generator_services_alpha.yaml }

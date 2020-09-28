@@ -20,7 +20,7 @@ class NearestNeighbourOptimalPathService implements OptimalPathService
         for ($i = 0; $i < $totalNodes - 1; $i++) {
             $previousSource = $source;
             $graph = $graph->removePath($excludeId);
-            $source = $this->getNextIdWithMinDistanceFromSource($graph, $source);
+            $source = $graph->getPathByPathId($source)->getNodeIdWithMinDistance( $source);
             $route[] = $source;
             $excludeId = $previousSource;
         }
@@ -28,13 +28,4 @@ class NearestNeighbourOptimalPathService implements OptimalPathService
         return new Route($route);
     }
 
-    /**
-     * @param Graph $graph
-     * @param Id $source
-     * @return Id
-     */
-    private function getNextIdWithMinDistanceFromSource(Graph $graph, Id $source): Id
-    {
-        return $graph->getPathByPathId($source)->getNodeIdWithMinDistance();
-    }
 }
