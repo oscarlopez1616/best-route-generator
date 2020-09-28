@@ -13,7 +13,7 @@ use BestRouteGenerator\Domain\CityRepository;
 use BestRouteGenerator\Domain\Coordinate;
 use BestRouteGenerator\Domain\Graph\AdjacencyGraphBuilder;
 use BestRouteGenerator\Domain\Route;
-use BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService;
+use BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService;
 use BestRouteGenerator\Infrastructure\HarvesineDistanceService;
 use BestRouteGenerator\Tests\ObjectMother\BoundedContext\BestRouteGenerator\Domain\GraphObjectMother;
 use Common\Type\Exception\DomainException;
@@ -54,7 +54,7 @@ class FindTheShortestPathTest extends TestCase
         $findTheShortestPathHandler = new FindTheShortestPathQueryHandler(
             $cityRepository,
             new AdjacencyGraphBuilder(new HarvesineDistanceService()),
-            new BruteForceOptimalPathService()
+            new NearestNeighbourOptimalPathService()
         );
 
         $route = $findTheShortestPathHandler->__invoke($findTheShortestPathQuery);
@@ -96,7 +96,7 @@ class FindTheShortestPathTest extends TestCase
         $findTheShortestPathHandler = new FindTheShortestPathQueryHandler(
             $cityRepository,
             $graphBuilder,
-            new BruteForceOptimalPathService()
+            new NearestNeighbourOptimalPathService()
         );
 
         $findTheShortestPathHandler->__invoke($findTheShortestPathQuery);

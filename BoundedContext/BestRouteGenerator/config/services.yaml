@@ -27,9 +27,9 @@ services:
 
   BestRouteGenerator\Domain\Graph\AdjacencyGraphBuilder:
 
-  BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService:
+  BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService:
 
-  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService'
+  BestRouteGenerator\Domain\Graph\OptimalPathService: '@BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService'
 
   BestRouteGenerator\Infrastructure\FileSystem\FileSystemCityRepository:
     arguments:

@@ -9,7 +9,7 @@ use BestRouteGenerator\Domain\Graph\OptimalPathService;
 use BestRouteGenerator\Domain\Route;
 use Common\Type\Id;
 
-class BruteForceOptimalPathService implements OptimalPathService
+class NearestNeighbourOptimalPathService implements OptimalPathService
 {
 
     public function findOptimalPath(Graph $graph, Id $source): Route

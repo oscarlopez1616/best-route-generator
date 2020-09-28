@@ -6,13 +6,13 @@ namespace BestRouteGenerator\Tests\UnitTest\BoundedContext\BestRouteGenerator\In
 
 
 use BestRouteGenerator\Domain\Route;
-use BestRouteGenerator\Infrastructure\Graph\BruteForceOptimalPathService;
+use BestRouteGenerator\Infrastructure\Graph\NearestNeighbourOptimalPathService;
 use BestRouteGenerator\Tests\ObjectMother\BoundedContext\BestRouteGenerator\Domain\GraphObjectMother;
 use Common\Type\Exception\DomainException;
 use Common\Type\Id;
 use PHPUnit\Framework\TestCase;
 
-class BruteForceOptimalPathServiceTest extends TestCase
+class NearestNeighbourOptimalPathServiceTest extends TestCase
 {
 
     /**
@@ -20,7 +20,7 @@ class BruteForceOptimalPathServiceTest extends TestCase
      */
     public function itShouldReturnRoute(): void
     {
-        $BruteForceOptimalPathService = new BruteForceOptimalPathService();
+        $BruteForceOptimalPathService = new NearestNeighbourOptimalPathService();
         $route = $BruteForceOptimalPathService->findOptimalPath(
             GraphObjectMother::adjacencyGraphWithExampleDataAllNodesConnected(),
             new Id('Barcelona')
@@ -44,7 +44,7 @@ class BruteForceOptimalPathServiceTest extends TestCase
     public function itShouldThrownDomainException(): void
     {
         $this->expectException(DomainException::class);
-        $BruteForceOptimalPathService = new BruteForceOptimalPathService();
+        $BruteForceOptimalPathService = new NearestNeighbourOptimalPathService();
         $BruteForceOptimalPathService->findOptimalPath(
             GraphObjectMother::adjacencyGraphWithExampleDataAllNodesConnected(),
             new Id('')
