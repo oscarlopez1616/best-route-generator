@@ -14,10 +14,16 @@ to execute this code it's needed to have docker and docker-compose in your machi
 
 `docker-compose exec php-fpm php solve.php`
 
-## To Run The Application with Branch&Bound Algorithm set APP_ENV
+## To Run The Application with Branch&Bound Algorithm:
+###create .env if you didn't create
+`cp .env.dist .env`
+### and set APP_ENV
 `APP_ENV=alpha`
 
-## To Run The Application with NearestNeighbour Algorithm &BoundAlgorithm set APP_ENV
+## To Run The Application with NearestNeighbour Algorithm &BoundAlgorithm
+###create .env if you didn't create
+`cp .env.dist .env`
+### and set APP_ENV
 `APP_ENV=dev`
 
 ## To Run The Unit Tests And Acceptance Tests
